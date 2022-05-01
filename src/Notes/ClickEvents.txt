@@ -1,0 +1,24 @@
+Handling Click Events
+
+
+const Home = () => {
+  const handleClick = () => {
+    console.log("TEST");
+  };
+
+  const handleClickAgain = (name) => {
+    console.log(`Hello ${name}`);
+  };
+
+
+  return (
+    <div className="home">
+      <h2>HomePage</h2>
+      <button onClick={handleClick}>Click Me</button> You do not evoke it unless you are passing a value as an arg or else it will throw an error
+      <button onClick={handleClickAgain("Kelvin")}>Click Me Again</button>
+      <button onClick={(event) => handleClickAgain(event)}>Click Me Again</button> This handles event targets
+    </div>
+  );
+};
+
+export default Home;

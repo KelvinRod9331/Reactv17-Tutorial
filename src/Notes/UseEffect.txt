@@ -1,0 +1,51 @@
+useEffect: Is a method that gets triggered when the DOM renders or when there are changes in state
+________________________________________________________________________________________________________________________________
+
+
+
+import { useState, useEffect } from "react";
+import BlogList from "./Bloglist";
+const Home = () => {
+  const [blogs, setBlogs] = useState([
+    { title: "My new website", body: "Lorem Ipsum", author: "mario", id: 1 },
+    { title: "Welcome Party", body: "Lorem Ipsum", author: "yoshi", id: 2 },
+    { title: "Web dev tool tips", body: "Lorem Ipsum", author: "mario", id: 3 },
+  ]);
+
+  const handleDelete = (id) => {
+    const newBlogs = blogs.filter((blog) => blog.id != id);
+    setBlogs(newBlogs);
+  };
+
+EX 1
+  useEffect(() => {
+    /** This function runs from every render or when a state changes 
+                        DO NOT USE (useState) here because you will get an infinite loop
+                     */
+    console.log("useEffect has run");
+  });
+
+EX 2
+   useEffect(() => {
+    /** This function runs from every render or when a state changes 
+                        DO NOT USE (useState) here because you will get an infinite loop
+                     */
+    
+  }, []); // Adding the empty array allows the useEffect to only run on the initial renter or on the mount 
+
+
+Ex 3 (useEffect Dependencies)
+ const [name, setName] = useState("Mario");
+  useEffect(() => {
+    console.log(name)
+  }, [name]); //Adding a state inside the array will watch the added states for any changes
+
+
+  return (
+    <div className="home">
+      <BlogList blogs={blogs} title={"My Blogs"} handleDelete={handleDelete} />
+    </div>
+  );
+};
+
+export default Home;

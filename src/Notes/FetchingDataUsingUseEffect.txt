@@ -1,0 +1,27 @@
+import { useState, useEffect } from "react";
+import BlogList from "./Bloglist";
+const Home = () => {
+  const [blogs, setBlogs] = useState([]);
+
+  const handleDelete = (id) => {
+    const newBlogs = blogs.filter((blog) => blog.id != id);
+    setBlogs(newBlogs);
+  };
+
+
+  // In this example I am using local server db but in practice you can use what ever data retrieving method
+
+  useEffect(() => {
+    fetch("http://localhost:8000/blogs")
+      .then((res) => res.json()) //You must retrieve the JSON from the db. Since its returning a Promise you must resolve it
+      .then((data) => { setBlogs(data) }); // The data has been resolved so now you can set the state here
+  }, []);
+
+  return (
+    <div className="home">
+      <BlogList blogs={blogs} title={"My Blogs"} handleDelete={handleDelete} />
+    </div>
+  );
+};
+
+export default Home;

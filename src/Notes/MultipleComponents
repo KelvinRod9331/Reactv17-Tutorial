@@ -1,0 +1,10 @@
+Component Tree
+
+                                                    App.js (Root Component)
+                                               /               |                 \
+                                    [Navbar.js]         [BlogDetails.js]       [Sidebar.js]
+                                                                                /        \
+                                                                        [Categories.js]   [Tags.js]
+
+
+                                                                        

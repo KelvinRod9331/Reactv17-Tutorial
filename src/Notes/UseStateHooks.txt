@@ -1,0 +1,29 @@
+import { useState } from "react";
+
+const Home = () => {
+  //let name = 'mario'
+  const [name, setName] =
+    useState(
+      "mario"
+    ); /**  useState is a method that allow a value to be reactive to be changeable at any moment, 
+                                                The first index of the array is the state and the second index is the method used to change that state at any given time */
+
+  const [age, setAge] = useState(29);
+
+  const handleClick = () => {
+    setName("luigi");
+    setAge(30);
+  };
+
+  return (
+    <div className="home">
+      <h2>HomePage</h2>
+      <p>
+        {name} is {age} years old
+      </p>
+      <button onClick={handleClick}>Click Me</button>
+    </div>
+  );
+};
+
+export default Home;
