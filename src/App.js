@@ -5,6 +5,7 @@ import BlogDetails from "./BlogDetails";
 import { Route, Switch } from "react-router-dom";
 
 import "./index.css";
+import NotFound from "./NotFound";
 
 function App() {
   return (
@@ -21,6 +22,9 @@ function App() {
           </Route>
           <Route path="/blogs/:id">
             <BlogDetails />
+          </Route>
+          <Route path="*"> {/**  This is a catch all route that will catch any route that is not listed above and display the NotFound component */}
+            <NotFound></NotFound>
           </Route>
         </Switch>
       </div>

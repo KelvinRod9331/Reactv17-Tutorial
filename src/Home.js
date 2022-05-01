@@ -7,9 +7,7 @@ const Home = () => {
     error,
   } = useFetch(`http://localhost:8000/blogs`);
 
-  const handleDelete = (id) => {
-    // const newBlogs = blogs.filter((blog) => blog.id != id);
-  };
+  
 
   return (
     <div className="home">
@@ -18,11 +16,7 @@ const Home = () => {
       {isPending ? (
         <div className="loading">Loading...</div>
       ) : (
-        <BlogList
-          blogs={blogs}
-          title={"My Blogs"}
-          handleDelete={handleDelete}
-        />
+        <BlogList blogs={blogs} title={"My Blogs"} />
       )}
     </div>
   );
