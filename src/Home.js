@@ -1,24 +1,29 @@
-import { useState, useEffect } from "react";
 import BlogList from "./Bloglist";
+import useFetch from "./useFetch";
 const Home = () => {
-  const [blogs, setBlogs] = useState([]);
+  const {
+    data: blogs,
+    isPending,
+    error,
+  } = useFetch(`http://localhost:8000/blogs`);
 
   const handleDelete = (id) => {
-    const newBlogs = blogs.filter((blog) => blog.id != id);
-    setBlogs(newBlogs);
+    // const newBlogs = blogs.filter((blog) => blog.id != id);
   };
-
-  useEffect(() => {
-    fetch("http://localhost:8000/blogs")
-      .then((res) => res.json())
-      .then((data) => {
-        setBlogs(data);
-      });
-  }, []);
 
   return (
     <div className="home">
-      <BlogList blogs={blogs} title={"My Blogs"} handleDelete={handleDelete} />
+      {/* The '&&'  is meant to show error IF is true if its a false value it will output the second option */}
+      {error && <div>{error}</div>}
+      {isPending ? (
+        <div className="loading">Loading...</div>
+      ) : (
+        <BlogList
+          blogs={blogs}
+          title={"My Blogs"}
+          handleDelete={handleDelete}
+        />
+      )}
     </div>
   );
 };

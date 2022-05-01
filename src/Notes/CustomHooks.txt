@@ -1,0 +1,77 @@
+You can create custom hooks and use it as a reusable piece of code anywhere in your application
+
+EX 1.A Creating a custom hooks
+NOTE THAT ALL NAMES OF YOUR CUSTOM HOOKS MUST START WITH HE WORD 'use'
+
+import { useState, useEffect } from "react"; // You import what ever react method you need
+
+const useFetch = (url) => { //The name of the function must start with the word 'use' in order to use it as a custom hook
+  
+  const [data, setData] = useState([]);
+  const [isPending, setIsPending] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    fetch(url)
+      .then((res) => {
+        if (!res.ok) {
+          throw Error("could not fetch the data for the resource");
+        }
+
+        return res.json();
+      })
+      .then((data) => {
+        setData(data);
+        setIsPending(false);
+      })
+      .catch((err) => {
+        console.error(err.message);
+        setIsPending(false);
+        setError(err.message);
+      });
+  }, []);
+
+  return { data, isPending, error }; // Here you can return an object with as many values as you wish or need when you call this custom hook
+};
+
+export default useFetch; //export the function so you can use it anywhere
+
+
+EX 1.B
+
+import { useState, useEffect } from "react";
+import BlogList from "./Bloglist";
+import useFetch from "./useFetch"; // You just import the custom hook here
+const Home = () => {
+
+//Here you can get all the payload that is being returned by the custom hook
+  const {
+    data: blogs,// If you want to rename a specific payload you can use ':' and the name of the variable you wish to call. i.e data is called blogs
+    isPending,
+    error,
+  } = useFetch(`http://localhost:8000/blogs`); //Passing the url to the custom hook
+
+  const handleDelete = (id) => {
+    const newBlogs = blogs.filter((blog) => blog.id != id);
+  };
+
+  return (
+    <div className="home">
+      {/* The '&&'  is meant to show error IF is true if its a false value it will output the second option */}
+      {error && <div>{error}</div>}
+      {isPending ? (
+        <div className="loading">Loading...</div>
+      ) : (
+        <BlogList
+          blogs={blogs}
+          title={"My Blogs"}
+          handleDelete={handleDelete}
+        />
+      )}
+    </div>
+  );
+};
+
+export default Home;
+
+

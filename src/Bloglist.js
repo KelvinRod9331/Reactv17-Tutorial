@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 const BlogList = (props) => {
   const { blogs, title, handleDelete } = props;
 
@@ -7,8 +9,11 @@ const BlogList = (props) => {
       {blogs.map((blog) => (
         //The key property is a must in order to react to changes
         <div className="blog-preview" key={blog.id}>
-          <h2>{blog.title}</h2>
-          <p>Written by {blog.author}</p>
+          <Link to={`/blogs/${blog.id}`}>
+            <h2>{blog.title}</h2>
+            <p>Written by {blog.author}</p>
+          </Link>
+
           <button onClick={() => handleDelete(blog.id)}>Delete Blog</button>
         </div>
       ))}

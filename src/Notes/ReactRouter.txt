@@ -1,0 +1,130 @@
+Installation
+npm install react-router-dom
+
+Importing/Use
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+
+
+EX 1.A (index.js)
+
+//This file is like main.js for vue its meant to load and mount the entire app
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import './index.css';
+import App from './App';
+
+import {  BrowserRouter as Router } from "react-router-dom"; // Import Router here and wrap the root component (App) with Router to use React Router
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <Router>
+    <App />
+  </Router>
+);
+
+
+
+EX 1.B (IN APP.js) The route should be handled on the root component which is APP.js
+
+
+
+
+import Navbar from "./Navbar";
+import Home from "./Home";
+import { Route, Switch } from "react-router-dom";
+
+import "./index.css";
+
+function App() {
+  return (
+    <Router> // You must wrap all content under Router component
+      <div className="App">
+        <Navbar />
+        <div className="content">
+          <Switch> // This allow you to switch routes and all routes component should be wrapped by Switch
+            {/** Only one route at a given time is shown. All route go into this component */}
+            <Route exact path="/"> This is the route component that should wrap around the component you want to display on that route path
+                                    The 'exact' prop is meant to let the Route know that When true, the active path will only be applied if the location is matched exactly.
+              <Home />
+            </Route>
+            <Route path="/create">
+              <Create />
+            </Route>
+          </Switch>
+        </div>
+      </div>
+    </Router>
+  );
+}
+
+export default App;
+
+
+EX 1.C (In NavBar component)
+ 
+import { Link } from "react-router-dom"; //You must import the Link component to use React's Router changes
+
+const Navbar = () => {
+  return (
+    <nav className="navbar">
+      <h1>The Dojo Blog</h1>
+      <div className="links">
+        <Link to="/">Home</Link> // This will also prevent requests to the server
+        <Link
+          to="/create"
+          style={{
+            color: "White",
+            backgroundColor: "#f1356d",
+            borderRadius: "8px",
+          }}
+        >
+          New Blog
+        </Link>
+      </div>
+    </nav>
+  );
+};
+
+export default Navbar;
+
+
+
+
+
+EX 2.A Using parameters 
+
+(In App.js)
+import Navbar from "./Navbar";
+import Home from "./Home";
+import Create from "./Create";
+import BlogDetails from "./BlogDetails";
+import { Route, Switch } from "react-router-dom";
+
+import "./index.css";
+
+function App() {
+  return (
+    <div className="App">
+      <Navbar />
+      <div className="content">
+        {/**  All routes go into this component Switch */}
+        <Switch>
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route path="/create">
+            <Create />
+          </Route>
+          <Route path="/blogs/:id"> //To pass parameters you need this '/:(param)'
+            <BlogDetails />
+          </Route>
+        </Switch>
+      </div>
+    </div>
+  );
+}
+
+export default App;
+
+
+
+FOR more info visit https://v5.reactrouter.com/web/api/NavLink/exact-bool
